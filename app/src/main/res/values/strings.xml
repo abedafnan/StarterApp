@@ -8,6 +8,9 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="action_sign_in">Sign in</string>
     <string name="action_register">Register</string>
-    <string name="error_field_required">This field is required</string>
     <string name="register_text">Don\'t have an Account?</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="welcome_text">Welcome</string>
+    <string name="action_change_password">Change Password</string>
+    <string name="action_log_out">Logout</string>
 </resources>
