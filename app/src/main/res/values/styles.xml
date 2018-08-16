@@ -16,4 +16,10 @@
         <item name="android:drawablePadding">16dp</item>
     </style>
 
+    <style name="ButtonStyle">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
 </resources>
