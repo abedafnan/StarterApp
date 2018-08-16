@@ -20,10 +20,23 @@ public class MainActivity extends AppCompatActivity {
                 logout();
             }
         });
+
+        Button changePassButton = findViewById(R.id.change_password_button);
+        changePassButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToChangePass();
+            }
+        });
     }
 
     public void logout() {
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToChangePass() {
+        Intent intent = new Intent(MainActivity.this, ChangePasswordActivity.class);
         startActivity(intent);
     }
 }
