@@ -10,10 +10,18 @@ import android.widget.Toast;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    private EditText usernameField;
+    private EditText passwordField;
+    private EditText passConfirmField;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        usernameField = findViewById(R.id.username_field);
+        passwordField = findViewById(R.id.password_field);
+        passConfirmField = findViewById(R.id.password_confirmation_field);
 
         Button registerButton = findViewById(R.id.register_button);
         registerButton.setOnClickListener(new View.OnClickListener() {
@@ -29,9 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public boolean checkPasswordMatch() {
-        EditText passwordField = findViewById(R.id.password_field);
         String password = passwordField.getText().toString();
-        EditText passConfirmField = findViewById(R.id.password_confirmation_field);
         String passConfirmation = passConfirmField.getText().toString();
 
         return password.equals(passConfirmation);

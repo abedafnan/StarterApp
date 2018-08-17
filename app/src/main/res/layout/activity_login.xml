@@ -34,7 +34,8 @@
             android:backgroundTint="#FFF"
             android:drawableLeft="@drawable/ic_account_circle_white_24dp"
             android:hint="@string/prompt_username"
-            android:inputType="text" />
+            android:inputType="text"
+            android:text="my username"/>
 
         <EditText
             android:id="@+id/password_field"
@@ -44,7 +45,8 @@
             android:backgroundTint="#FFF"
             android:drawableLeft="@drawable/ic_lock_open_white_24dp"
             android:hint="@string/prompt_password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:text="abc123"/>
 
         <Button
             android:id="@+id/login_button"

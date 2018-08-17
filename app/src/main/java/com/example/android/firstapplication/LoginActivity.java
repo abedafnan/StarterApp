@@ -12,11 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
-    EditText usernameField;
-    EditText passwordField;
-
-    final String mUsername = "my username";
-    final String mPassword = "abc123";
+    String mUsername = "my username";
+    String mPassword = "abc123";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (loginCheck()) {
                     login();
+                    finish();
                 } else {
                     showAlert();
                 }
@@ -45,19 +43,18 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public boolean loginCheck() {
-        usernameField = findViewById(R.id.username_field);
+        EditText usernameField = findViewById(R.id.username_field);
         String username = usernameField.getText().toString();
-        passwordField = findViewById(R.id.password_field);
+        EditText passwordField = findViewById(R.id.password_field);
         String password = passwordField.getText().toString();
 
-        if (username.equalsIgnoreCase(mUsername) & password.equals(mPassword)) {
-            return true;
-        } else
-            return false;
+        return username.equalsIgnoreCase(mUsername) & password.equals(mPassword);
     }
 
     public void login() {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        intent.putExtra("username", mUsername);
+        intent.putExtra("password", mPassword);
         startActivity(intent);
     }
 

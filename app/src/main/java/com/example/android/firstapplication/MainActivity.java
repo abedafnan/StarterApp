@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.FileNotFoundException;
@@ -17,7 +18,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
 
-    CircleImageView profileImage;
+    private CircleImageView profileImage;
+    private String username;
+    private String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                logout();
+                logout(); finish();
             }
         });
 
@@ -47,6 +50,13 @@ public class MainActivity extends AppCompatActivity {
                 goToChangePass();
             }
         });
+
+        Intent intent = getIntent();
+        username = intent.getStringExtra("username");
+        password = intent.getStringExtra("password");
+
+        TextView userTextView = findViewById(R.id.username_text_view);
+        userTextView.setText(username);
     }
 
     public void changeProfileImage() {
@@ -85,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToChangePass() {
         Intent intent = new Intent(MainActivity.this, ChangePasswordActivity.class);
+        intent.putExtra("password", password);
         startActivity(intent);
     }
 }
