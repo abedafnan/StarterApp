@@ -23,7 +23,7 @@ public class RegisterActivity extends AppCompatActivity {
                     registerCompletion();
                 else
                     Toast.makeText(RegisterActivity.this,
-                            "Passwords don't match", Toast.LENGTH_LONG).show();
+                            "Passwords don't match!", Toast.LENGTH_LONG).show();
             }
         });
     }
