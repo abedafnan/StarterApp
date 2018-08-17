@@ -14,11 +14,22 @@ import android.widget.Toast;
 public class LoginActivity extends AppCompatActivity {
     String mUsername = "my username";
     String mPassword = "abc123";
+    EditText usernameField;
+    EditText passwordField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        usernameField = findViewById(R.id.username_field);
+        passwordField = findViewById(R.id.password_field);
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            mUsername = intent.getStringExtra("username");
+            mPassword = intent.getStringExtra("password");
+        }
 
         Button loginButton = findViewById(R.id.login_button);
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -43,9 +54,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public boolean loginCheck() {
-        EditText usernameField = findViewById(R.id.username_field);
         String username = usernameField.getText().toString();
-        EditText passwordField = findViewById(R.id.password_field);
         String password = passwordField.getText().toString();
 
         return username.equalsIgnoreCase(mUsername) & password.equals(mPassword);

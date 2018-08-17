@@ -13,6 +13,9 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText usernameField;
     private EditText passwordField;
     private EditText passConfirmField;
+    private String username;
+    private String password;
+    private String passConfirmation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +30,10 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (checkPasswordMatch())
+                if (checkPasswordMatch()) {
                     registerCompletion();
-                else
+                    finish();
+                } else
                     Toast.makeText(RegisterActivity.this,
                             "Passwords don't match!", Toast.LENGTH_LONG).show();
             }
@@ -37,14 +41,17 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public boolean checkPasswordMatch() {
-        String password = passwordField.getText().toString();
-        String passConfirmation = passConfirmField.getText().toString();
+        password = passwordField.getText().toString();
+        passConfirmation = passConfirmField.getText().toString();
 
         return password.equals(passConfirmation);
     }
 
     public void registerCompletion() {
+        username = usernameField.getText().toString();
         Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+        intent.putExtra("username", username);
+        intent.putExtra("password", password);
         startActivity(intent);
     }
 }
