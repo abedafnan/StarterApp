@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private CircleImageView profileImage;
     private String username;
     private String password;
+    private String newPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +40,7 @@ public class MainActivity extends AppCompatActivity {
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                logout();
-                finish();
+                logout(); finish();
             }
         });
 
@@ -86,11 +86,17 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this,
                         "You haven't picked an Image",Toast.LENGTH_LONG).show();
             }
+        } else if (requestCode == 2) {
+            if (resultCode == RESULT_OK) {
+                newPassword = data.getStringExtra("newPassword");
+            }
         }
     }
 
     public void logout() {
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        intent.putExtra("newPassword", newPassword);
+        setResult(RESULT_OK);
         startActivity(intent);
     }
 

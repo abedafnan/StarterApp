@@ -33,25 +33,27 @@ public class RegisterActivity extends AppCompatActivity {
                 if (checkPasswordMatch()) {
                     registerCompletion();
                     finish();
-                } else
+                } else {
                     Toast.makeText(RegisterActivity.this,
                             "Passwords don't match!", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
 
     public boolean checkPasswordMatch() {
-        password = passwordField.getText().toString();
-        passConfirmation = passConfirmField.getText().toString();
+        password = passwordField.getText().toString().trim();
+        passConfirmation = passConfirmField.getText().toString().trim();
 
         return password.equals(passConfirmation);
     }
 
     public void registerCompletion() {
-        username = usernameField.getText().toString();
-        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+        username = usernameField.getText().toString().trim();
+        Intent intent = new Intent();
         intent.putExtra("username", username);
         intent.putExtra("password", password);
-        startActivity(intent);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }

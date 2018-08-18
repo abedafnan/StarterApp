@@ -12,10 +12,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
-    String mUsername = "my username";
+    String  mUsername = "my username";
     String mPassword = "abc123";
-    EditText usernameField;
-    EditText passwordField;
+    private EditText usernameField;
+    private EditText passwordField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,19 +25,12 @@ public class LoginActivity extends AppCompatActivity {
         usernameField = findViewById(R.id.username_field);
         passwordField = findViewById(R.id.password_field);
 
-        Intent intent = getIntent();
-        if (intent != null) {
-            mUsername = intent.getStringExtra("username");
-            mPassword = intent.getStringExtra("password");
-        }
-
         Button loginButton = findViewById(R.id.login_button);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (loginCheck()) {
-                    login();
-                    finish();
+                    login(); finish();
                 } else {
                     showAlert();
                 }
@@ -54,22 +47,39 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public boolean loginCheck() {
-        String username = usernameField.getText().toString();
-        String password = passwordField.getText().toString();
+        String username = usernameField.getText().toString().trim();
+        String password = passwordField.getText().toString().trim();
 
-        return username.equalsIgnoreCase(mUsername) & password.equals(mPassword);
+        return mUsername.equalsIgnoreCase(username) & mPassword.equals(password);
     }
 
     public void login() {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         intent.putExtra("username", mUsername);
         intent.putExtra("password", mPassword);
-        startActivity(intent);
+        startActivityForResult(intent, 2);
     }
 
     public void register() {
         Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                mUsername = data.getStringExtra("username");
+                usernameField.setText(mUsername);
+                mPassword = data.getStringExtra("password");
+                passwordField.setText(mPassword);
+            }
+        } else if (requestCode == 2) {
+            if (resultCode == RESULT_OK) {
+                mPassword = data.getStringExtra("newPassword");
+            }
+        }
     }
 
     public void showAlert() {

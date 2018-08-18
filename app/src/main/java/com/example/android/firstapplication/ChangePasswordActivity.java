@@ -13,6 +13,8 @@ import android.widget.Toast;
 public class ChangePasswordActivity extends AppCompatActivity {
 
     private String password;
+    private String newPassword;
+    private String confirmPassword;
     private EditText currentPassField;
     private EditText newPassField;
     private EditText confirmPassField;
@@ -24,7 +26,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Change Password");
 
@@ -54,12 +55,12 @@ public class ChangePasswordActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_done) {
-            String currentPassword = currentPassField.getText().toString();
+            String currentPassword = currentPassField.getText().toString().trim();
 
             if (currentPassword.equals(password)) {
-                if (checkPasswordMatch())
-                    finish();
-                else Toast.makeText(ChangePasswordActivity.this,
+                if (checkPasswordMatch()) {
+                    saveNewPassword();
+                } else Toast.makeText(ChangePasswordActivity.this,
                         "Passwords don't match!", Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(ChangePasswordActivity.this,
@@ -70,10 +71,15 @@ public class ChangePasswordActivity extends AppCompatActivity {
     }
 
     public boolean checkPasswordMatch() {
-        String newPassword = newPassField.getText().toString();
-        String confirmPassword = confirmPassField.getText().toString();
+        newPassword = newPassField.getText().toString().trim();
+        confirmPassword = confirmPassField.getText().toString().trim();
 
         return newPassword.equals(confirmPassword);
+    }
 
+    public void saveNewPassword() {
+        Intent intent = new Intent();
+        intent.putExtra("newPassword", newPassword);
+        finish();
     }
 }
