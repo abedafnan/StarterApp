@@ -2,6 +2,7 @@ package com.example.android.firstapplication;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,11 +17,21 @@ public class LoginActivity extends AppCompatActivity {
     String mPassword = "abc123";
     private EditText usernameField;
     private EditText passwordField;
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        preferences = getSharedPreferences("preferences", MODE_PRIVATE);
+        // keeps the user logged in
+        if (preferences.getBoolean("isLoggedIn", false)) {
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        }
 
         usernameField = findViewById(R.id.username_field);
         passwordField = findViewById(R.id.password_field);
@@ -44,6 +55,10 @@ public class LoginActivity extends AppCompatActivity {
                 register();
             }
         });
+
+        preferences = getSharedPreferences("preferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("isLoggedIn", false);
     }
 
     public boolean loginCheck() {
@@ -57,6 +72,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         intent.putExtra("username", mUsername);
         intent.putExtra("password", mPassword);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivityForResult(intent, 2);
     }
 
