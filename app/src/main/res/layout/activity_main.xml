@@ -51,7 +51,7 @@
         android:stateListAnimator="@null"
         android:elevation="4dp"
         android:text="@string/action_change_password"
-        android:layout_above="@+id/logout_button"/>
+        android:layout_above="@id/logout_button"/>
 
     <Button
         android:id="@+id/logout_button"

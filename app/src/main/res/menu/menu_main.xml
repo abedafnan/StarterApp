@@ -5,6 +5,7 @@
     tools:context=".ChangePasswordActivity">
 
     <item
+        android:title="@string/menu_item_title"
         android:id="@+id/action_done"
         android:orderInCategory="100"
         android:icon="@drawable/ic_done_white_36dp"

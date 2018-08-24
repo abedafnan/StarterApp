@@ -42,8 +42,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (loginCheck()) {
                     login(); finish();
-                } else {
-                    showAlert();
                 }
             }
         });
@@ -65,7 +63,15 @@ public class LoginActivity extends AppCompatActivity {
         String username = usernameField.getText().toString().trim();
         String password = passwordField.getText().toString().trim();
 
-        return mUsername.equalsIgnoreCase(username) & mPassword.equals(password);
+        if (mUsername.equalsIgnoreCase(username)) {
+            if (mPassword.equals(password)) {
+                return true;
+            } else
+                passwordField.setError("Wrong password");
+        } else
+            usernameField.setError("Invalid username");
+
+        return false;
     }
 
     public void login() {
@@ -97,14 +103,5 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
-
-    public void showAlert() {
-        AlertDialog.Builder alert  = new AlertDialog.Builder(LoginActivity.this);
-
-        alert.setMessage("wrong username or password");
-        alert.setTitle("Error Message");
-        alert.setPositiveButton("Try Again", null);
-        alert.setCancelable(true);
-        alert.create().show();
-    }
+    
 }
