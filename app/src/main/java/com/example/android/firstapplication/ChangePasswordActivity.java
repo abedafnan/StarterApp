@@ -59,7 +59,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
             if (currentPassword.equals(password)) {
                 if (checkPasswordMatch()) {
-                    saveNewPassword();
+                    finish();
                 } else Toast.makeText(ChangePasswordActivity.this,
                         "Passwords don't match!", Toast.LENGTH_LONG).show();
             } else {
@@ -77,9 +77,4 @@ public class ChangePasswordActivity extends AppCompatActivity {
         return newPassword.equals(confirmPassword);
     }
 
-    public void saveNewPassword() {
-        Intent intent = new Intent();
-        intent.putExtra("newPassword", newPassword);
-        finish();
-    }
 }

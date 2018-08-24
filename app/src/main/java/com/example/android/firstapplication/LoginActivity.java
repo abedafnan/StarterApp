@@ -1,9 +1,7 @@
 package com.example.android.firstapplication;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,12 +22,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        preferences = getSharedPreferences("preferences", MODE_PRIVATE);
+        preferences = getSharedPreferences("login", MODE_PRIVATE);
         // keeps the user logged in
         if (preferences.getBoolean("isLoggedIn", false)) {
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
+            login();
             finish();
         }
 
@@ -41,7 +37,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (loginCheck()) {
-                    login(); finish();
+                    login();
+                    preferences.edit().putBoolean("isLoggedIn", true).apply();
+                    finish();
                 }
             }
         });
@@ -53,10 +51,6 @@ public class LoginActivity extends AppCompatActivity {
                 register();
             }
         });
-
-        preferences = getSharedPreferences("preferences", MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("isLoggedIn", false);
     }
 
     public boolean loginCheck() {
@@ -64,9 +58,9 @@ public class LoginActivity extends AppCompatActivity {
         String password = passwordField.getText().toString().trim();
 
         if (mUsername.equalsIgnoreCase(username)) {
-            if (mPassword.equals(password)) {
+            if (mPassword.equals(password))
                 return true;
-            } else
+            else
                 passwordField.setError("Wrong password");
         } else
             usernameField.setError("Invalid username");
@@ -79,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
         intent.putExtra("username", mUsername);
         intent.putExtra("password", mPassword);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivityForResult(intent, 2);
+        startActivity(intent);
     }
 
     public void register() {
@@ -97,11 +91,6 @@ public class LoginActivity extends AppCompatActivity {
                 mPassword = data.getStringExtra("password");
                 passwordField.setText(mPassword);
             }
-        } else if (requestCode == 2) {
-            if (resultCode == RESULT_OK) {
-                mPassword = data.getStringExtra("newPassword");
-            }
         }
     }
-    
 }

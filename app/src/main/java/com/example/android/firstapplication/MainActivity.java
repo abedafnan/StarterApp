@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -22,12 +23,12 @@ public class MainActivity extends AppCompatActivity {
     private CircleImageView profileImage;
     private String username;
     private String password;
-    private String newPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.d("MainActivity", "main activity created");
 
         profileImage = findViewById(R.id.profile_image_view);
         profileImage.setOnClickListener(new View.OnClickListener() {
@@ -87,17 +88,13 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this,
                         "You haven't picked an Image",Toast.LENGTH_LONG).show();
             }
-        } else if (requestCode == 2) {
-            if (resultCode == RESULT_OK) {
-                newPassword = data.getStringExtra("newPassword");
-            }
         }
     }
 
     public void logout() {
+        getSharedPreferences("login", MODE_PRIVATE).edit().putBoolean("isLoggedIn", false).apply();
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-        intent.putExtra("newPassword", newPassword);
-        setResult(RESULT_OK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 
