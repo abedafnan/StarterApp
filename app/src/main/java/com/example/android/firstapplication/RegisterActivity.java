@@ -26,6 +26,8 @@ public class RegisterActivity extends AppCompatActivity {
         passwordField = findViewById(R.id.password_field);
         passConfirmField = findViewById(R.id.password_confirmation_field);
 
+        // When the register button is pressed
+        // Checks for input validation and completes the register procedure if valid
         Button registerButton = findViewById(R.id.register_button);
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,6 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    // Checks if the password and the password confirmation are identical
     public boolean checkPasswordMatch() {
         password = passwordField.getText().toString().trim();
         passConfirmation = passConfirmField.getText().toString().trim();
@@ -48,6 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
         return password.equals(passConfirmation);
     }
 
+    // Takes back data needed for logging in to the login screen
     public void registerCompletion() {
         username = usernameField.getText().toString().trim();
         Intent intent = new Intent();

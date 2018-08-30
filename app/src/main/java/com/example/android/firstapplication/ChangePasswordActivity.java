@@ -26,24 +26,30 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
+        // Displaying the back arrow
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // Setting the title of the toolbar
         getSupportActionBar().setTitle("Change Password");
 
         currentPassField = findViewById(R.id.current_pass_field);
         newPassField = findViewById(R.id.new_pass_field);
         confirmPassField = findViewById(R.id.confirm_pass_field);
 
+        // Takes the old password data from the main activity
+        // to use it for old password validation
         Intent intent = getIntent();
         password = intent.getStringExtra("password");
 
     }
 
+    // Code for the back arrow
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
     }
 
+    // Inflating the option menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -57,7 +63,9 @@ public class ChangePasswordActivity extends AppCompatActivity {
         if (id == R.id.action_done) {
             String currentPassword = currentPassField.getText().toString().trim();
 
+            // Checking if the old password inputted is valid
             if (currentPassword.equals(password)) {
+                // Checking if both the new password and the confirmation are matching
                 if (checkPasswordMatch()) {
                     finish();
                 } else Toast.makeText(ChangePasswordActivity.this,

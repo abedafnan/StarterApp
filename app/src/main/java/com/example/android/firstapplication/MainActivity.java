@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.d("MainActivity", "main activity created");
 
+        // When profile image is pressed
+        // Goes to the gallery for an image pick
         profileImage = findViewById(R.id.profile_image_view);
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // When logout button is pressed
+        // Goes back to login screen
         Button logoutButton = findViewById(R.id.logout_button);
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // When change password button is pressed
+        // Goes to change password screen
         Button changePassButton = findViewById(R.id.change_password_button);
         changePassButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,20 +60,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Gets the username and password data from the login activity
         Intent intent = getIntent();
         username = intent.getStringExtra("username");
         password = intent.getStringExtra("password");
 
+        // Displays the username on the screen
         TextView userTextView = findViewById(R.id.username_text_view);
         userTextView.setText(username);
     }
 
+    // Handles transferring to the gallery
     public void changeProfileImage() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         startActivityForResult(intent, 1);
     }
 
+    // Gets back the data of the chosen image from the gallery
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -91,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Handles transferring back to the login screen
     public void logout() {
         getSharedPreferences("login", MODE_PRIVATE).edit().putBoolean("isLoggedIn", false).apply();
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
@@ -98,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    // Handles transferring to the change password screen
+    // Sends password data to it
     public void goToChangePass() {
         Intent intent = new Intent(MainActivity.this, ChangePasswordActivity.class);
         intent.putExtra("password", password);

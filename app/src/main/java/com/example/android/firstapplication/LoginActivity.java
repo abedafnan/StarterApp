@@ -23,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         preferences = getSharedPreferences("login", MODE_PRIVATE);
-        // keeps the user logged in
+        // Keeps the user logged in if they already are
         if (preferences.getBoolean("isLoggedIn", false)) {
             login();
             finish();
@@ -32,6 +32,8 @@ public class LoginActivity extends AppCompatActivity {
         usernameField = findViewById(R.id.username_field);
         passwordField = findViewById(R.id.password_field);
 
+        // When the login button is pressed
+        // Checks the user inputs and goes to profile if they are valid
         Button loginButton = findViewById(R.id.login_button);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,6 +46,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        // When the register button is pressed
+        // Goes to register screen
         TextView registerTextView = findViewById(R.id.register_text_view);
         registerTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +57,8 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    // Checks if the username and password are valid
+    // Displays an error message if they aren't
     public boolean loginCheck() {
         String username = usernameField.getText().toString().trim();
         String password = passwordField.getText().toString().trim();
@@ -68,6 +74,7 @@ public class LoginActivity extends AppCompatActivity {
         return false;
     }
 
+    // Handles transferring to the profile screen after the login procedure is successful
     public void login() {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         intent.putExtra("username", mUsername);
@@ -76,11 +83,13 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    // Handles transferring to the register screen
     public void register() {
         Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
         startActivityForResult(intent, 1);
     }
 
+    // Gets data back from the register activity for login
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
